@@ -26,6 +26,7 @@ public class UserController extends  BaseController{
         user.setPassword("sadassdsa");
         userMapper.insertSelective(user);
         System.out.println("test");
+
     }
 
 }

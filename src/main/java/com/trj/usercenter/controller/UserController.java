@@ -5,6 +5,7 @@ import com.trj.usercenter.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 /**
  * 用户控制器
@@ -27,6 +28,17 @@ public class UserController extends  BaseController{
         userMapper.insertSelective(user);
         System.out.println("test");
 
+    }
+
+    @RequestMapping("/add")
+    public ModelAndView home() {
+
+        ModelAndView modelAndView = new ModelAndView();
+        logger.info("add request");
+        modelAndView.addObject("email", "apk2sf@163.com");
+        modelAndView.setViewName("add");
+
+        return modelAndView;
     }
 
 }

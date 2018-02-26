@@ -6,7 +6,6 @@ package com.trj.usercenter.tool;
 public class Result<T> {
     private boolean success;
     private String message;
-    private Integer code;
     private T data;
 
     public Result() {
@@ -16,14 +15,6 @@ public class Result<T> {
     public Result(boolean success) {
         this.success = true;
         this.success = success;
-    }
-
-    public Integer getCode() {
-        return code;
-    }
-
-    public void setCode(Integer code) {
-        this.code = code;
     }
 
     public boolean isSuccess() {

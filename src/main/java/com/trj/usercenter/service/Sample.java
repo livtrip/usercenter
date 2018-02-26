@@ -13,6 +13,7 @@ import java.util.HashMap;
  */
 
 public class Sample {
+
     //设置APPID/AK/SK
     public static final String APP_ID = "f9a734b0a8a04358a6b54f5420b72ecc";
     public static final String API_KEY = "ODX0sqE5jYMAd0PTbGmrBkLl";

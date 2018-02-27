@@ -63,6 +63,7 @@ public class CoreCodeGenController {
     @PostMapping(MODEL + "/gen.json")
     @ResponseBody
     public Result<Boolean> gen(String table) {
+
         Entity entity = codeGenService.getEntityInfo(table);
         System.out.println(JSON.toJSONString(entity));
 

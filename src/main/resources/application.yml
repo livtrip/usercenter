@@ -26,6 +26,10 @@ eureka:
     fetch-registry: false
     serviceUrl:
       defaultZone: http://localhost:1114/eureka/
-
+beetl:
+  suffix: html
+beetlsql:
+  dbStyle: org.beetl.sql.core.db.MySqlStyle
+  basePackage: com.trj.usercenter
 
 

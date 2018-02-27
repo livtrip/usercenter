@@ -1,4 +1,4 @@
-package com.trj.usercenter.service;
+package com.trj.usercenter.util;
 
 
 

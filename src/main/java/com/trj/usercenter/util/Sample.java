@@ -1,4 +1,4 @@
-package com.trj.usercenter.service;
+package com.trj.usercenter.util;
 
 import com.baidu.aip.ocr.AipOcr;
 import org.json.JSONObject;

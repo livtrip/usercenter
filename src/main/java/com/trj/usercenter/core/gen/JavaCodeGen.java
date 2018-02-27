@@ -1,14 +1,9 @@
 package com.trj.usercenter.core.gen;
 
-import com.trj.usercenter.core.gen.model.Attribute;
 import com.trj.usercenter.core.gen.model.Entity;
 import org.beetl.core.GroupTemplate;
 import org.beetl.core.Template;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class JavaCodeGen  implements AutoGen{
 	String basePackage;
@@ -21,99 +16,22 @@ public class JavaCodeGen  implements AutoGen{
 	}
 	@Override
 	public void make(Target target, Entity entity) {
-		
-		JavaEntityGen entityGen = new JavaEntityGen(this);
-		entityGen.make(target, entity);
-		
-		JavaDaoGen daoGen = new JavaDaoGen(this);
-		daoGen.make(target, entity);
-		
 		JavaServiceGen serviceGen = new JavaServiceGen(this);
 		serviceGen.make(target, entity);
-		
-		
+
+		JavaServiceImplGen serviceImplGen = new JavaServiceImplGen(this);
+		serviceImplGen.make(target, entity);
+
 		JavaControllerGen webGen = new JavaControllerGen(this);
 		webGen.make(target, entity);
-		
-		JavaQueryGen queryGen = new JavaQueryGen(this);
-		queryGen.make(target, entity);
-	
+
+		JavaControllerTestGen webTestGen = new JavaControllerTestGen(this);
+		webTestGen.make(target, entity);
 	}
 	
 	@Override
 	public String getName() {
 		return "";
-	}
-	
-}
-
-
-class JavaEntityGen  implements AutoGen{
-	JavaCodeGen gen;
-	
-	public JavaEntityGen(JavaCodeGen gen){
-		this.gen = gen;
-		
-	}
-	@Override
-	public void make(Target target, Entity entity) {
-		GroupTemplate gt = target.getGroupTemplate();
-		Template template = gt.getTemplate("/java/pojo.java");
-		template.binding("entity", entity);
-		template.binding("target", target);
-		template.binding("package", gen.basePackage+".entity");
-		template.binding("className", entity.getName());
-		List<Map<String,Object>> attrs = new ArrayList<Map<String,Object>>();
-		for(Attribute attr:entity.getList()) {
-			Map<String,Object> map = new HashMap<String,Object>();
-			map.put("comment", attr.getComment());
-			map.put("type", attr.getJavaType());
-			map.put("name", attr.getName());
-			map.put("methodName", BaseTarget.upperFirst(attr.getName()));
-			map.put("isId", attr.isId());
-			attrs.add(map);
-			
-		}
-		template.binding("attrs", attrs);
-		String srcHead ="";
-		srcHead+="import java.math.*;"+JavaCodeGen.CR;
-		srcHead+="import java.util.Date;"+JavaCodeGen.CR;
-		
-		srcHead+="import java.sql.Timestamp;"+JavaCodeGen.CR;
-		template.binding("imports", srcHead);
-		template.binding("comment", entity.getComment());
-		String content = template.render();
-		target.flush(this, content);
-	}
-
-	@Override
-	public String getName() {
-		return gen.entity.getName()+".java";
-	}
-	
-}
-
-
-class JavaDaoGen  implements AutoGen{
-	JavaCodeGen gen;
-	public JavaDaoGen(JavaCodeGen gen){
-		this.gen = gen;
-	}
-	@Override
-	public void make(Target target, Entity entity) {
-		GroupTemplate gt = target.getGroupTemplate();
-		Template template = gt.getTemplate("/java/dao.java");
-		template.binding("entity", entity);
-		template.binding("target", target);
-		template.binding("package", gen.basePackage+".dao");
-		template.binding("basePackage", gen.basePackage);
-		String content = template.render();
-		target.flush(this, content);
-	}
-
-	@Override
-	public String getName() {
-		return gen.entity.getName()+"Dao.java";
 	}
 	
 }
@@ -143,6 +61,31 @@ class JavaServiceGen  implements AutoGen{
 	
 }
 
+class JavaServiceImplGen  implements AutoGen{
+	JavaCodeGen gen;
+	public JavaServiceImplGen(JavaCodeGen gen){
+		this.gen = gen;
+	}
+	@Override
+	public void make(Target target, Entity entity) {
+		GroupTemplate gt = target.getGroupTemplate();
+		Template template = gt.getTemplate("/java/serviceImpl.java");
+		template.binding("entity", entity);
+		template.binding("target", target);
+		template.binding("package", gen.basePackage+".service.impl");
+		template.binding("basePackage", gen.basePackage);
+		String content = template.render();
+		target.flush(this, content);
+	}
+
+	@Override
+	public String getName() {
+		return gen.entity.getName()+"ServiceImpl.java";
+	}
+
+}
+
+
 
 class JavaControllerGen  implements AutoGen{
 	JavaCodeGen gen;
@@ -152,7 +95,7 @@ class JavaControllerGen  implements AutoGen{
 	@Override
 	public void make(Target target, Entity entity) {
 		GroupTemplate gt = target.getGroupTemplate();
-		Template template = gt.getTemplate("/java/controller.java");
+		Template template = gt.getTemplate("java/controller.java");
 		template.binding("entity", entity);
 		template.binding("target", target);
 		template.binding("package", gen.basePackage+".web");
@@ -168,42 +111,32 @@ class JavaControllerGen  implements AutoGen{
 	
 }
 
-
-class JavaQueryGen  implements AutoGen{
+class JavaControllerTestGen  implements AutoGen{
 	JavaCodeGen gen;
-	public JavaQueryGen(JavaCodeGen gen){
+	public JavaControllerTestGen(JavaCodeGen gen){
 		this.gen = gen;
 	}
 	@Override
 	public void make(Target target, Entity entity) {
 		GroupTemplate gt = target.getGroupTemplate();
-		Template template = gt.getTemplate("/java/query.java");
-		List<Attribute> list = new ArrayList<Attribute>();
-		for(Attribute attr:entity.getList()) {
-			if(attr.isShowInQuery()) {
-				list.add(attr);
-			}
-		}
-		
-		if(list.isEmpty()) {
-			list.add(entity.getIdAttribute());
-		}
-		
+		Template template = gt.getTemplate("java/controllerTest.java");
 		template.binding("entity", entity);
 		template.binding("target", target);
-		template.binding("package", gen.basePackage+".web.query");
+		template.binding("package", gen.basePackage+".controller");
 		template.binding("basePackage", gen.basePackage);
-		template.binding("attrs", list);
 		String content = template.render();
 		target.flush(this, content);
 	}
 
 	@Override
 	public String getName() {
-		return gen.entity.getName()+"Query.java";
+		return gen.entity.getName()+"ControllerTest.java";
 	}
-	
+
 }
+
+
+
 
 
 

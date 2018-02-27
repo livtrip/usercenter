@@ -1,6 +1,8 @@
 package com.trj.usercenter.core.web;
 
 import java.util.List;
+
+import com.alibaba.fastjson.JSON;
 import com.trj.usercenter.core.gen.JavaCodeGen;
 import com.trj.usercenter.core.gen.MavenProjectTarget;
 import com.trj.usercenter.core.gen.model.Attribute;
@@ -57,20 +59,16 @@ public class CoreCodeGenController {
 
     @PostMapping(MODEL + "/gen.json")
     @ResponseBody
-    public Result<Boolean> gen(EntityInfo data) {
-        Entity  entity = getEntitiyInfo(data);;
-        String urlBase = data.getUrlBase();
-        String basePackage = data.getBasePackage();
+    public Result<Boolean> gen(String table) {
+        Entity entity = codeGenService.getEntityInfo(table);
+        System.out.println(JSON.toJSONString(entity));
+        String urlBase = "user";
+        String basePackage = "com.trj.usercenter";
 
         MavenProjectTarget target = new MavenProjectTarget(entity, basePackage);
         target.setUrlBase(urlBase);
-
-
         JavaCodeGen javaGen = new JavaCodeGen(basePackage, entity);
         javaGen.make(target, entity);
-
-//        MdGen mdGen = new MdGen();
-//        mdGen.make(target, entity);
         return Results.newSuccessResult(true);
 
     }

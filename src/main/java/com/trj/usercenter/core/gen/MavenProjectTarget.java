@@ -23,18 +23,15 @@ public class MavenProjectTarget extends BaseTarget {
 		String target  = null;
 		if (gen instanceof MdGen) {
 			 target = getResourcePath()+"/sql/"+entity.getSystem()+"/"+name;
-		}else if (gen instanceof JavaEntityGen) {
-			 target = getSrcPath()+"/"+basePackagePath+"/entity/"+name;
-		}else if (gen instanceof JavaDaoGen) {
-			 target = getSrcPath()+"/"+basePackagePath+"/dao/"+name;
-		}else if (gen instanceof JavaQueryGen) {
-			 target = getSrcPath()+"/"+basePackagePath+"/web/query/"+name;
 		}else if (gen instanceof JavaServiceGen) {
 			 target = getSrcPath()+"/"+basePackagePath+"/service/"+name;
 		}else if (gen instanceof JavaControllerGen) {
 			 target = getSrcPath()+"/"+basePackagePath+"/web/"+name;
+		}else if(gen instanceof  JavaServiceImplGen){
+			target = getSrcPath() +"/"+basePackagePath+"/service/impl/"+ name;
+		}else if(gen instanceof  JavaControllerTestGen){
+			target = getTestSrcPath() +"/"+basePackagePath+"/controller/"+ name;
 		}
-		
 		if(target==null) {
 			return ;
 		}
@@ -72,6 +69,10 @@ public class MavenProjectTarget extends BaseTarget {
 		return getRootPath() + File.separator + "src/main/resources";
 	}
 
+	public static String getTestSrcPath(){
+		return  getRootPath() + File.separator +"src/test/java";
+	}
+
 	private static String getRootPath() {
 		String srcPath;
 		String userDir = System.getProperty("user.dir");
@@ -79,7 +80,7 @@ public class MavenProjectTarget extends BaseTarget {
 			throw new NullPointerException("用户目录未找到");
 		}
 
-		return userDir+"/admin-console/";
+		return userDir;
 	}
 
 }

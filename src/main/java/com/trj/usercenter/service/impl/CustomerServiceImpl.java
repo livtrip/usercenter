@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
- * Customer 接口实现层
+ * Customer接口实现
  */
 @Service
 public class CustomerServiceImpl implements CustomerService{
@@ -19,4 +19,10 @@ public class CustomerServiceImpl implements CustomerService{
     public Customer findById(Integer id) {
         return customerMapper.selectByPrimaryKey(id);
     }
+     @Override
+    public int deleteById(Integer id) {
+        return customerMapper.deleteByPrimaryKey(id);
+    }
+
+
 }

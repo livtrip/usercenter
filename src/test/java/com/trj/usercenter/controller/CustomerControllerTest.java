@@ -21,4 +21,9 @@ public class CustomerControllerTest {
     public void findById(){
         System.out.println(JSON.toJSONString(customerController.findById(1)));
     }
+
+    @Test
+    public void deleteById(){
+        System.out.println(JSON.toJSONString(customerController.deleteById(1)));
+    }
 }

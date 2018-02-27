@@ -1,4 +1,6 @@
 package ${package};
+
+import org.springframework.web.bind.annotation.GetMapping;
 import com.trj.usercenter.domain.${entity.name};
 import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +12,7 @@ import com.trj.usercenter.tool.Result;
  * ${entity.name} 控制器
  */
 \@RestController
-\@RequestMapping("/${target.urlBase}")
+\@RequestMapping("/${entity.code}")
 public class ${entity.name}Controller extends BaseController{
 
     @var service=entity.code+"Service";
@@ -18,15 +20,19 @@ public class ${entity.name}Controller extends BaseController{
     \@Autowired
     private ${entity.name}Service ${service};
 
-    /**
-     * 根据Id查询Model
-     * \@param  id 主键
-     * \@return 模型实体
-     */
-    \@GetMapping("findById")
+
+   \@GetMapping("findById")
    public Result<${entity.name}> findById(Integer id) {
         return Results.newSuccessResult(${service}.findById(id));
-    }
+   }
+
+
+   \@GetMapping("deleteById")
+   public Result<Boolean> deleteById(Integer id){
+       int num = ${service}.deleteById(id);
+       boolean result = num ==1 ?true:false;
+       return Results.newSuccessResult(result);
+   }
 
 
 

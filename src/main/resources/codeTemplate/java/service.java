@@ -7,4 +7,7 @@ import ${basePackage}.domain.*;
 public interface ${entity.name}Service {
 
     ${entity.name} findById(Integer id);
+
+    int deleteById(Integer id);
+
 }

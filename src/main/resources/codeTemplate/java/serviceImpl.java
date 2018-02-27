@@ -20,4 +20,10 @@ public class ${entity.name}ServiceImpl implements ${entity.name}Service{
     public ${entity.name} findById(Integer id) {
         return ${entity.code}Mapper.selectByPrimaryKey(id);
     }
+     \@Override
+    public int deleteById(Integer id) {
+        return ${entity.code}Mapper.deleteByPrimaryKey(id);
+    }
+
+
 }

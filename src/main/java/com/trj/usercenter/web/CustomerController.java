@@ -1,4 +1,6 @@
 package com.trj.usercenter.web;
+
+import org.springframework.web.bind.annotation.GetMapping;
 import com.trj.usercenter.domain.Customer;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,15 +19,19 @@ public class CustomerController extends BaseController{
     @Autowired
     private CustomerService customerService;
 
-    /**
-     * 根据Id查询Model
-     * @param  id 主键
-     * @return 模型实体
-     */
-    @GetMapping("findById")
+
+   @GetMapping("findById")
    public Result<Customer> findById(Integer id) {
         return Results.newSuccessResult(customerService.findById(id));
-    }
+   }
+
+
+   @GetMapping("deleteById")
+   public Result<Boolean> deleteById(Integer id){
+       int num = customerService.deleteById(id);
+       boolean result = num ==1 ?true:false;
+       return Results.newSuccessResult(result);
+   }
 
 
 

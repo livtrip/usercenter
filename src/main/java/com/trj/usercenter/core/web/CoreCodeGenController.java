@@ -13,6 +13,7 @@ import com.trj.usercenter.tool.Results;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,6 +29,8 @@ public class CoreCodeGenController {
 
     @Autowired
     CoreCodeGenService codeGenService;
+    @Value("beetlsql.basePackage")
+    private String basePackage;
 
 
     @GetMapping(MODEL + "/tableDetail.do")
@@ -62,11 +65,9 @@ public class CoreCodeGenController {
     public Result<Boolean> gen(String table) {
         Entity entity = codeGenService.getEntityInfo(table);
         System.out.println(JSON.toJSONString(entity));
-        String urlBase = "user";
-        String basePackage = "com.trj.usercenter";
 
         MavenProjectTarget target = new MavenProjectTarget(entity, basePackage);
-        target.setUrlBase(urlBase);
+        target.setUrlBase("");
         JavaCodeGen javaGen = new JavaCodeGen(basePackage, entity);
         javaGen.make(target, entity);
         return Results.newSuccessResult(true);

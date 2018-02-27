@@ -21,4 +21,9 @@ public class ${entity.name}ControllerTest {
     public void findById(){
         System.out.println(JSON.toJSONString(${entity.code}Controller.findById(1)));
     }
+
+    \@Test
+    public void deleteById(){
+        System.out.println(JSON.toJSONString(${entity.code}Controller.deleteById(1)));
+    }
 }

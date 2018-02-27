@@ -2,9 +2,12 @@ package com.trj.usercenter.service;
 
 import com.trj.usercenter.domain.*;
 /**
- * Customer 接口
+ * Customer接口定义
  */
 public interface CustomerService {
 
     Customer findById(Integer id);
+
+    int deleteById(Integer id);
+
 }

@@ -1,6 +1,8 @@
 package com.trj.usercenter.web;
 
 import org.springframework.web.bind.annotation.GetMapping;
+
+import org.springframework.web.bind.annotation.GetMapping;
 import com.trj.usercenter.domain.Customer;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +14,7 @@ import com.trj.usercenter.tool.Result;
  * Customer 控制器
  */
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/customer")
 public class CustomerController extends BaseController{
 
 
@@ -32,6 +34,11 @@ public class CustomerController extends BaseController{
        boolean result = num ==1 ?true:false;
        return Results.newSuccessResult(result);
    }
+
+    @GetMapping("queryByIdStatus}")
+    public Result<Boolean> queryByIdStatus(){
+        return Results.newSuccessResult(true);
+    }
 
 
 

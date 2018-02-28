@@ -1,6 +1,7 @@
 package com.trj.usercenter.core.gen;
 
 import com.trj.usercenter.core.gen.model.Entity;
+import com.trj.usercenter.core.gen.model.Table;
 import org.beetl.core.GroupTemplate;
 import org.beetl.core.Template;
 
@@ -13,7 +14,7 @@ public class MdGen  implements AutoGen{
 	}
 	
 	@Override
-	public void make(Target target, Entity entity) {
+	public void make(Target target, Entity entity,Table table) {
 		this.entity = entity;
 		GroupTemplate gt = target.getGroupTemplate();
 		Template template = gt.getTemplate("/md/entity.md");

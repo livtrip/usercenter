@@ -14,9 +14,20 @@ import java.util.List;
 public class Method {
     @XStreamAsAttribute
     private String name;
+    @XStreamAsAttribute
+    private String methodName;
 
     @XStreamImplicit(itemFieldName = "item")
     private List<Item> itemList;
+
+
+    public String getMethodName() {
+        return methodName;
+    }
+
+    public void setMethodName(String methodName) {
+        this.methodName = methodName;
+    }
 
     public String getName() {
         return name;

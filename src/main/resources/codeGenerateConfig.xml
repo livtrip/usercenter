@@ -2,7 +2,7 @@
 <root>
 
     <table tableName="customer">
-        <method name="queryByIdStatus">
+        <method name="queryByIdStatus" modelName="Customer">
             <item type="req" javaType="Integer" notNull="true" name="status"/>
             <item type="req" javaType="Integer" notNull="true" name="Id"/>
 

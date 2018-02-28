@@ -1,7 +1,10 @@
 package com.trj.usercenter.core.service;
 
+import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.io.xml.DomDriver;
 import com.trj.usercenter.core.gen.model.Attribute;
 import com.trj.usercenter.core.gen.model.Entity;
+import com.trj.usercenter.core.gen.model.TableRoot;
 import org.beetl.sql.core.JavaType;
 import org.beetl.sql.core.NameConversion;
 import org.beetl.sql.core.SQLManager;
@@ -11,7 +14,10 @@ import org.beetl.sql.core.db.MetadataManager;
 import org.beetl.sql.core.db.TableDesc;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ResourceUtils;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -25,6 +31,20 @@ public class CoreCodeGenService {
 
     @Autowired
     SQLManager sqlManager;
+
+    public TableRoot getTableConfig(){
+        try {
+            File dataXml = new File(ResourceUtils.getURL("classpath:codeGenerateConfig.xml").getPath());
+            XStream xstream = new XStream(new DomDriver());
+            xstream.autodetectAnnotations(true);
+            xstream.processAnnotations(TableRoot.class);
+            TableRoot tableRoot = (TableRoot) xstream.fromXML(dataXml);
+            return tableRoot;
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
     public List<Entity> getAllEntityInfo(){
         MetadataManager meta = sqlManager.getMetaDataManager();

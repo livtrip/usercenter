@@ -27,7 +27,7 @@ public class CoreCodeGenControllerTest {
 
     @Test
     public void getInfo(){
-        System.out.println(JSON.toJSONString(coreCodeGenController.gen("customer")));
+        System.out.println(JSON.toJSONString(coreCodeGenController.gen()));
     }
 
     @Test

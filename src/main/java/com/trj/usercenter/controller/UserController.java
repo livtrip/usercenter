@@ -2,6 +2,7 @@ package com.trj.usercenter.controller;
 
 import com.trj.usercenter.domain.User;
 import com.trj.usercenter.mapper.UserMapper;
+import com.trj.usercenter.web.BaseController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,7 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
  * @version $$Id: usercenter, v 0.1 18/1/5 下午5:32 mark1xie Exp $$
  */
 @RestController
-public class UserController extends  BaseController{
+public class UserController extends BaseController {
 
     @Autowired
     private UserMapper userMapper;

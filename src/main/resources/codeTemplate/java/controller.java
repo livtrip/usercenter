@@ -1,6 +1,7 @@
 package ${package};
 
 import org.springframework.web.bind.annotation.GetMapping;
+
 import com.trj.usercenter.domain.${entity.name};
 import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,13 @@ public class ${entity.name}Controller extends BaseController{
        boolean result = num ==1 ?true:false;
        return Results.newSuccessResult(result);
    }
+
+@for(method in table.methodList){
+    \@GetMapping("${method.name}}")
+    public Result<Boolean> ${method.name}(){
+        return Results.newSuccessResult(true);
+    }
+@}
 
 
 

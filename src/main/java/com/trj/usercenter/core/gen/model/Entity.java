@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Entity {
+	Table table;
 	String name;
 	String tableName;
 	String code;
@@ -14,6 +15,15 @@ public class Entity {
 	Attribute nameAttribute;
 	String comment;
 	String system;
+
+	public Table getTable() {
+		return table;
+	}
+
+	public void setTable(Table table) {
+		this.table = table;
+	}
+
 	public String getName() {
 		return name;
 	}

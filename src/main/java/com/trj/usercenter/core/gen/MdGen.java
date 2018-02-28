@@ -14,7 +14,7 @@ public class MdGen  implements AutoGen{
 	}
 	
 	@Override
-	public void make(Target target, Entity entity,Table table) {
+	public void make(Target target, Entity entity) {
 		this.entity = entity;
 		GroupTemplate gt = target.getGroupTemplate();
 		Template template = gt.getTemplate("/md/entity.md");

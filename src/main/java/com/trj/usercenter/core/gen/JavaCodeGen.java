@@ -16,18 +16,18 @@ public class JavaCodeGen  implements AutoGen{
 		this.entity = entity;
 	}
 	@Override
-	public void make(Target target, Entity entity,Table table) {
+	public void make(Target target, Entity entity) {
 		JavaServiceGen serviceGen = new JavaServiceGen(this);
-		serviceGen.make(target, entity,table);
+		serviceGen.make(target, entity);
 
 		JavaServiceImplGen serviceImplGen = new JavaServiceImplGen(this);
-		serviceImplGen.make(target, entity,table);
+		serviceImplGen.make(target, entity);
 
 		JavaControllerGen webGen = new JavaControllerGen(this);
-		webGen.make(target, entity,table);
+		webGen.make(target, entity);
 
 		JavaControllerTestGen webTestGen = new JavaControllerTestGen(this);
-		webTestGen.make(target, entity,table);
+		webTestGen.make(target, entity);
 	}
 	
 	@Override
@@ -38,13 +38,15 @@ public class JavaCodeGen  implements AutoGen{
 }
 
 
+
+
 class JavaServiceGen  implements AutoGen{
 	JavaCodeGen gen;
 	public JavaServiceGen(JavaCodeGen gen){
 		this.gen = gen;
 	}
 	@Override
-	public void make(Target target, Entity entity,Table table) {
+	public void make(Target target, Entity entity) {
 		GroupTemplate gt = target.getGroupTemplate();
 		Template template = gt.getTemplate("/java/service.java");
 		template.binding("entity", entity);
@@ -68,7 +70,7 @@ class JavaServiceImplGen  implements AutoGen{
 		this.gen = gen;
 	}
 	@Override
-	public void make(Target target, Entity entity,Table table) {
+	public void make(Target target, Entity entity) {
 		GroupTemplate gt = target.getGroupTemplate();
 		Template template = gt.getTemplate("/java/serviceImpl.java");
 		template.binding("entity", entity);
@@ -94,12 +96,12 @@ class JavaControllerGen  implements AutoGen{
 		this.gen = gen;
 	}
 	@Override
-	public void make(Target target, Entity entity,Table table) {
+	public void make(Target target, Entity entity) {
 		GroupTemplate gt = target.getGroupTemplate();
 		Template template = gt.getTemplate("java/controller.java");
 		template.binding("entity", entity);
 		template.binding("target", target);
-		template.binding("table",table);
+		template.binding("table",entity.getTable());
 		template.binding("package", gen.basePackage+".web");
 		template.binding("basePackage", gen.basePackage);
 		String content = template.render();
@@ -119,7 +121,7 @@ class JavaControllerTestGen  implements AutoGen{
 		this.gen = gen;
 	}
 	@Override
-	public void make(Target target, Entity entity,Table table) {
+	public void make(Target target, Entity entity) {
 		GroupTemplate gt = target.getGroupTemplate();
 		Template template = gt.getTemplate("java/controllerTest.java");
 		template.binding("entity", entity);

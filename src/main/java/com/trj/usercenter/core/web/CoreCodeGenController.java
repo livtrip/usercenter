@@ -1,6 +1,5 @@
 package com.trj.usercenter.core.web;
 
-import com.alibaba.fastjson.JSON;
 import com.trj.usercenter.core.gen.JavaCodeGen;
 import com.trj.usercenter.core.gen.MavenProjectTarget;
 import com.trj.usercenter.core.gen.model.Entity;
@@ -13,7 +12,6 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -39,10 +37,11 @@ public class CoreCodeGenController {
             if(CollectionUtils.isNotEmpty(tableList)){
                 for(Table table : tableList){
                     Entity entity = codeGenService.getEntityInfo(table.getTableName());
+                    entity.setTable(table);
                     MavenProjectTarget target = new MavenProjectTarget(entity, basePackage);
                     target.setUrlBase("");
                     JavaCodeGen javaGen = new JavaCodeGen(basePackage, entity);
-                    javaGen.make(target, entity,table);
+                    javaGen.make(target, entity);
                 }
             }
         }

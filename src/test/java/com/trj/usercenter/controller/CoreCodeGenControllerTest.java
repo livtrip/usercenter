@@ -1,6 +1,9 @@
 package com.trj.usercenter.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.io.xml.DomDriver;
+import com.trj.usercenter.core.gen.model.TableRoot;
 import com.trj.usercenter.core.web.CoreCodeGenController;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -9,6 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.util.ResourceUtils;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 
 /**
@@ -29,8 +33,14 @@ public class CoreCodeGenControllerTest {
     @Test
     public void test(){
         try {
-            String xml = ResourceUtils.getURL("classpath:codeGenerateConfig.xml").getPath();
-            System.out.println(xml);
+            File dataXml = new File(ResourceUtils.getURL("classpath:codeGenerateConfig.xml").getPath());
+            XStream xstream = new XStream(new DomDriver());
+            xstream.autodetectAnnotations(true);
+            xstream.processAnnotations(TableRoot.class);
+            TableRoot tableRoot = (TableRoot) xstream.fromXML(dataXml);
+
+            System.out.println(JSON.toJSONString(tableRoot));
+
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }

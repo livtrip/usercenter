@@ -2,7 +2,6 @@ package com.trj.usercenter.web;
 
 import org.springframework.web.bind.annotation.GetMapping;
 
-import com.trj.usercenter.domain.Customer;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.trj.usercenter.service.*;

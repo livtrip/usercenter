@@ -36,7 +36,7 @@
 			<property name="enableSubPackages" value="false" />
 		</sqlMapGenerator>
 
-		<table tableName="customer" domainObjectName="Customer">
+		<table tableName="a_member" domainObjectName="Member">
 			<generatedKey column="id" sqlStatement="JDBC" />
 		</table>
 	</context>
